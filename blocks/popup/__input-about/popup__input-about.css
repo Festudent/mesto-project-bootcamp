@@ -1,0 +1,21 @@
+.popup__input-about {
+  margin: 30px auto 48px;
+  padding: 0;
+  width: 358px;
+  height: 27px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 930px) {
+  .popup__input-about {
+    margin: 30px auto 45px;
+    width: 238px;
+  }
+}
