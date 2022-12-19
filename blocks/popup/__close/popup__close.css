@@ -5,7 +5,7 @@
   height: 32px;
   background-color: transparent;
   background-image: url(../../../images/close-button.svg);
-  background-position: contain;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   border: none;

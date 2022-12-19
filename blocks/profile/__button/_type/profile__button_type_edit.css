@@ -1,15 +1,17 @@
-.profile__button_edit {
+.profile__button_type_edit {
   margin-left: 18px;
   width: 24px;
   height: 24px;
   background-image: url(../../../../images/edit-button.svg);
+  background-size: 10px 10px;
   border: 1px solid #FFFFFF;
 }
 
 @media screen and (max-width: 930px) {
-  .profile__button_edit {
+  .profile__button_type_edit {
     margin-left: 10px;
     width: 18px;
     height: 18px;
+    background-size: 7.5px 7.5px;
   }
 }

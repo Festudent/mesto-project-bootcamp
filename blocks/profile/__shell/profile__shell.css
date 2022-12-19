@@ -1,0 +1,20 @@
+.profile__shell {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+@media screen and (max-width: 930px) {
+  .profile__shell {   
+    /* по макету верхний отступ указан как 14px, но при указании такого значения в perfect pixel макет не соответствует,
+    вручную подобрал знаение 9px, чтобы исправить ошибку помеченную ревьюером 
+    "Исправьте расхождения в модалке http://joxi.ru/vAWXv3lugvDbpr" */
+    margin-bottom: 9px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    position: relative;
+    left: 14px;
+  }
+}

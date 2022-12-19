@@ -10,7 +10,8 @@
 
 @media screen and (max-width: 930px) {
   .profile {
-    margin: 42px auto 36px;
+    margin-top: 42px;
+    margin-bottom: 36px;
     max-width: 282px;
     min-height: 286px;
     display: block;

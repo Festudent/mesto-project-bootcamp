@@ -5,6 +5,7 @@
 
 @media screen and (max-width: 930px) {
   .profile__text {
-    margin: 0 auto 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

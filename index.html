@@ -22,13 +22,15 @@
           <img class="profile__avatar" src="./images/image-kusto.jpg" alt="аватар">
           <div class="profile__info">
             <div class="profile__text">
-              <h1 class="profile__name">Жак-Ив Кусто<button class="profile__button profile__button_edit"
-                  type="button"></button></h1>
+              <div class="profile__shell">
+                <h1 class="profile__name">Жак-Ив Кусто</h1>
+                <button class="profile__button profile__button_type_edit" type="button"></button>
+              </div>
               <p class="profile__status">Исследователь океана</p>
             </div>
           </div>
         </div>
-        <button class="profile__button profile__button_add" type="button"></button>
+        <button class="profile__button profile__button_type_add" type="button"></button>
       </section>
 
       <section class="elements">
@@ -40,7 +42,6 @@
             <button class="element__like" type="button"></button>
           </div>
         </article>
-        </ul>
 
         <article class="element">
           <img class="element__image" src="./images/elbrus.jpg" alt="эльбрус">
@@ -49,7 +50,6 @@
             <button class="element__like" type="button"></button>
           </div>
         </article>
-        </ul>
 
         <article class="element">
           <img class="element__image" src="./images/dombai.jpg" alt="домбай">
@@ -58,7 +58,6 @@
             <button class="element__like" type="button"></button>
           </div>
         </article>
-        </ul>
 
         <article class="element">
           <img class="element__image" src="./images/elbrus.jpg" alt="эльбрус">
@@ -67,7 +66,6 @@
             <button class="element__like" type="button"></button>
           </div>
         </article>
-        </ul>
 
         <article class="element">
           <img class="element__image" src="./images/dombai.jpg" alt="Домбай">
@@ -76,7 +74,6 @@
             <button class="element__like" type="button"></button>
           </div>
         </article>
-        </ul>
 
         <article class="element">
           <img class="element__image" src="./images/karachaevsk.jpg" alt="карачаевск">
@@ -85,25 +82,24 @@
             <button class="element__like" type="button"></button>
           </div>
         </article>
-        </ul>
 
       </section>
 
     </main>
 
     <footer class="footer">
-      <h2 class="footer__copyright">&#169; 2020 Mesto Russia</h2>
+      <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
 
   </div>
 
   <div class="popup popup_opened">
     <div class="popup__container">
-      <div class="popup__close"></div>
+      <button class="popup__close" type="button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form">
-        <input type="text" class="popup__input-name" value="Жак-Ив Кусто">
-        <input type="text" class="popup__input-about" value="Исследователь океана">
+      <form class="popup__form" name="profile">
+        <input type="text" class="popup__input-text" name="name" value="Жак-Ив Кусто" placeholder="Имя">
+        <input type="text" class="popup__input-text" name="about" value="Исследователь океана" placeholder="О себе">
         <input type="submit" class="popup__input-submit" value="Сохранить">
       </form>
 

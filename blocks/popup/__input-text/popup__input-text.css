@@ -1,0 +1,44 @@
+.popup__input-text {
+  padding: 0 0 13px;
+  width: 358px;
+  height: 27px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 930px) {
+  .popup__input-text {
+    width: 238px;
+  }
+}
+
+/* по макету верхний отступ указан как 54px, но при указании такого значения в perfect pixel макет не соответствует,
+вручную подобрал знаение 48px, чтобы исправить ошибку помеченную ревьюером 
+"Исправьте расхождения http://joxi.ru/l2ZXENLuzb3g8r" */
+
+.popup__input-text:first-child {
+  margin: 48px auto 30px;
+}
+
+@media screen and (max-width: 930px) {
+  .popup__input-text:first-child {
+    margin-top: 75px;
+  }
+}
+
+.popup__input-text:nth-child(2) {
+  margin: 30px auto 48px;
+}
+
+@media screen and (max-width: 930px) {
+  .popup__input-text:nth-child(2) {
+    margin-bottom: 45px;
+  }
+}

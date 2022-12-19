@@ -1,0 +1,19 @@
+.profile__button_type_add {
+  width: 150px;
+  height: 50px;
+  background-image: url(../../../../images/add-button.svg);
+  background-size: 22px 22px;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 930px) {
+  .profile__button_type_add {
+    /* по макету верхний отступ указан как 34px, но при указании такого значения в perfect pixel макет не соответствует,
+вручную подобрал знаение 31px, чтобы исправить ошибку помеченную ревьюером 
+"Исправьте расхождения http://joxi.ru/l2ZXENLuzb3g8r" */
+    margin-top: 31px;
+    width: 282px;
+    background-size: 16px 16px;
+  }
+}
