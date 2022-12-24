@@ -5,7 +5,4 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
