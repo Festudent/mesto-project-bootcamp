@@ -1,5 +1,6 @@
 .popup__input-submit {
-  margin: 48px auto 37px;
+  /* старое margin: 48px auto 37px; */
+  margin: 31px auto 37px;
   padding: 0;
   width: 358px;
   height: 50px;
@@ -13,6 +14,7 @@
   text-align: center;
   color: #FFFFFF;
   display: block;
+  pointer-events: auto;
 }
 
 @media screen and (max-width: 930px) {

@@ -34,7 +34,7 @@
       </section>
 
       <section class="elements">
-        
+
         <!-- старые карточки 
         <article class="element">
           <img class="element__image" src="./images/karachaevsk.jpg" alt="карачаевск">
@@ -95,39 +95,47 @@
 
   </div>
 
-  <div class="popup">
+  <div class="popup popup-edit">
     <div class="popup__container">
       <button class="popup__close popup__close_type_form" type="button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form" name="profile">
-        <input type="text" class="popup__input-text" name="name" placeholder="Имя">
-        <input type="text" class="popup__input-text" name="about" placeholder="О себе">
+      <form class="popup__form popup-edit__form" name="profile" novalidate>
+        <input id="input-text-one" type="text" class="popup__input-text popup-edit__input-text" name="name"
+          placeholder="Имя" minlength="2" maxlength="40" required>
+        <span id="input-text-one-error" class="input-text-one-error popup__input-error"></span>
+        <input id="input-text-two" type="text" class="popup__input-text popup-edit__input-text" name="about"
+          placeholder="О себе" minlength="2" maxlength="200" required>
+        <span id="input-text-two-error" class="input-text-two-error popup__input-error"></span>
         <input type="submit" class="popup__input-submit" value="Сохранить">
       </form>
     </div>
   </div>
 
-  <div class="popup">
-    <div class="popup__shell">      
+  <div class="popup popup-zoom">
+    <div class="popup__shell">
       <button class="popup__close popup__close_type_image" type="button"></button>
       <img class="popup__image">
       <p class="popup__text"></p>
     </div>
   </div>
 
-  <div class="popup">
+  <div class="popup popup-add">
     <div class="popup__container">
       <button class="popup__close popup__close_type_form" type="button"></button>
       <h2 class="popup__heading">Новое место</h2>
-      <form class="popup__form" name="profile">
-        <input type="text" class="popup__input-text" name="name" placeholder="Название">
-        <input type="text" class="popup__input-text" name="link" placeholder="Ссылка на картинку">
+      <form class="popup__form popup-add__form" name="element" novalidate>
+        <input id="input-text-three" type="text" class="popup__input-text popup-add__input-text" name="elementname"
+          placeholder="Название" minlength="2" maxlength="30" required>
+        <span id="input-text-three-error" class="input-text-three-error popup__input-error"></span>
+        <input id="input-text-four" type="url" class="popup__input-text popup-add__input-text" name="link"
+          placeholder="Ссылка на картинку" required>
+        <span id="input-text-four-error" class="input-text-four-error popup__input-error"></span>
         <input type="submit" class="popup__input-submit" value="Создать">
       </form>
     </div>
   </div>
 
-  <template id="template" >
+  <template id="template">
     <article class="element">
       <button class="element__delete" type="button"></button>
       <img class="element__image">
