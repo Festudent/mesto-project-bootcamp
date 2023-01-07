@@ -1,3 +1,5 @@
+import './pages/index.css';
+
 // поиск элементов DOM //
 const template = document.querySelector('#template');
 const cardsElement = document.querySelector('.elements');
