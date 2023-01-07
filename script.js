@@ -195,20 +195,20 @@ cardsElements.addEventListener('click', function (evt) {
 });
 
 
-/* Валидация формы edit inputStatusEdit */
+/* Валидация форм */
 
 // функция показа ошибки //
 function showInputError(inputEl, inputErrEl) {
   inputEl.classList.add('popup__input-text_error');
   inputErrEl.textContent = inputEl.validationMessage;
-  inputErrEl.classList.add('name-input-error_active');
+  // все работает с одним постоянным классом только на textContent // inputErrEl.classList.add('popup__input-error_active'); //
 }
 
 // функция скрытия ошибки //
 function hideInputError(inputEl, inputErrEl) {
   inputEl.classList.remove('popup__input-text_error');
   inputErrEl.textContent = '';
-  inputErrEl.classList.remove('popup__input-error_active');
+  // все работает с одним постоянным классом только на textContent // inputErrEl.classList.remove('popup__input-error_active'); //
 }
 
 // функция проверки валидности //
@@ -228,16 +228,25 @@ function hasInvalidInput(inputArray) {
 }
 
 // функция стилизации кнопки //
-function toggleButton(inputArray, buttonElement) {
+/* старая функция function toggleButton(inputArray, buttonElement) {
   if (hasInvalidInput(inputArray)) {
     buttonElement.classList.add('popup__input-submit_inactive');
   } else {
     buttonElement.classList.remove('popup__input-submit_inactive');
   }
+} */
+
+function toggleButton(inputArray, buttonElement, inactiveButtonClass) {
+  if (hasInvalidInput(inputArray)) {
+    buttonElement.classList.add(inactiveButtonClass);
+  } else {
+    buttonElement.classList.remove(inactiveButtonClass);
+  }
 }
 
+
 // функция добавления слушателя с функцией проверки валидности всем текстовым инпутам формы //
-function setTextInputsEventListeners(form) {
+/* старая функция function setTextInputsEventListeners(form) {
   const formTextInputs = form.querySelectorAll('.popup__input-text');
   const formTextInputsArray = Array.from(formTextInputs);
   const button = form.querySelector('.popup__input-submit');
@@ -249,18 +258,47 @@ function setTextInputsEventListeners(form) {
       toggleButton(formTextInputsArray, button);
     });
   });
+} */
+
+function setTextInputsEventListeners(form, inputSelector, submitButtonSelector, inactiveButtonClass) {
+  const formTextInputs = form.querySelectorAll(inputSelector);
+  const formTextInputsArray = Array.from(formTextInputs);
+  const button = form.querySelector(submitButtonSelector);
+  toggleButton(formTextInputsArray, button, inactiveButtonClass);
+  formTextInputsArray.forEach(function (inputEl) {
+    const inputErrEl = document.querySelector(`.${inputEl.id}-error`);
+    inputEl.addEventListener('input', function () {
+      isValid(inputEl, inputErrEl);
+      toggleButton(formTextInputsArray, button, inactiveButtonClass);
+    });
+  });
 }
 
 // функция добавления setTextInputsEventListeners всем формам //
-
-function enableValidation() {
+/* старая функция function enableValidation() {
   const allFormsArray = Array.from(allForms);
   allFormsArray.forEach(function (form) {
     setTextInputsEventListeners(form);
   });
 };
 
-enableValidation();
+enableValidation(); */
+
+function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass }) {
+  const allFormsV = document.querySelectorAll(formSelector);
+  const allFormsArray = Array.from(allFormsV);
+  allFormsArray.forEach(function (form) {
+    setTextInputsEventListeners(form, inputSelector, submitButtonSelector, inactiveButtonClass);
+  });
+};
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input-text',
+  submitButtonSelector: '.popup__input-submit',
+  inactiveButtonClass: 'popup__input-submit_inactive',
+  // у меня элемент ошибки работает с постоянным классом // inputErrorClass: 'popup__input-text_error', //
+});
 
 // кнопки close: очищение текстового содержимого и стилей ошибок (у меня они продолжали оставаться без этого) //
 inputErrors.forEach(function (errorItem) {
