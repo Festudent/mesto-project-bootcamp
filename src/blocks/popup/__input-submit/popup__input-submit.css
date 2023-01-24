@@ -1,6 +1,7 @@
 .popup__input-submit {
-  /* старое margin: 48px auto 37px; */
-  margin: 31px auto 37px;
+  /* старое margin: 48px auto 37px; 
+  margin: 31px auto 37px; изменил верхний margin, чтобы попап не увеличивался, так как ошибка бывает на две строчки */
+  margin: 13px auto 37px;
   padding: 0;
   width: 358px;
   height: 50px;
@@ -19,7 +20,8 @@
 
 @media screen and (max-width: 930px) {
   .popup__input-submit {
-    margin-top: 45px;
+    /* margin-top: 45px; изменил верхний margin, чтобы попап не увеличивался, так как ошибка бывает на две строчки */
+    margin-top: 27px;
     margin-bottom: 25px;
     width: 238px;
     height: 46px;

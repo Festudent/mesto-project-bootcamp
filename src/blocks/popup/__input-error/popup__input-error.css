@@ -2,7 +2,8 @@
   margin: 0 auto 0;
   padding: 0;
   display: block;
-  min-height: 12px;
+  /* min-height: 12px; */
+  min-height: 30px;
   width: 358px;
   font-family: "Inter", sans-serif;
   font-style: normal;

@@ -1,11 +1,15 @@
 import '../pages/index.css';
+import { getUserInfo, getCards, patchUserInfo, postCard, patchAvatar } from './api.js';
 import { enableValidation } from './validate.js';
 import { initialCards, createCard } from './card.js';
-import { closePopupWithOverlayClick, closePopupWithEscPress, handleFormEditSubmit, handleFormAddSubmit } from './modal.js';
-import { cardsElement, editButton, popupEdit, addButton, popupAdd, inputNameEdit, profileName, inputStatusEdit, profileStatus, closeButtons, popupForms, formElementEdit, formElementAdd, cardsElements, popupWithImage, popupImage, popupText, openPopup, closePopup } from './utils.js';
+import { closePopupWithOverlayClick, openPopup, closePopup } from './modal.js';
+import { cardsElement, editButton, popupEdit, addButton, popupAdd, inputNameEdit, profileName, inputStatusEdit, profileStatus, closeButtons, popupForms, formElementEdit, formElementAdd, cardsElements, popupWithImage, popupImage, popupText, inputNameAdd, inputLinkAdd, popupAddButton, profileAvatarEditer, popupProfile, popupProfileButton, profileAvatar, inputLinkProfile, formElementProfile, renderCreateLoading, renderSaveLoading, popupEditButton } from './utils.js';
 
+getUserInfo();
 
-// добавление изначальных карточек на страницу //
+getCards();
+
+/* добавление изначальных карточек на страницу //
 initialCards.forEach(function (item) {
   cardsElement.append(createCard(item.link, item.name));
 });
@@ -20,45 +24,99 @@ function addCards(cardsInfo) {
 addCards(initialCards); */
 
 
-// кнопки edit и add: открытие модальных окон // 
+// кнопки edit и add: открытие модальных окон и последнее новое окно// 
 editButton.addEventListener('click', function () {
   openPopup(popupEdit);
-  inputNameEdit.setAttribute('value', profileName.textContent);
-  inputStatusEdit.setAttribute('value', profileStatus.textContent);
+  /* inputNameEdit.setAttribute('value', profileName.textContent);
+  inputStatusEdit.setAttribute('value', profileStatus.textContent); */
+  inputNameEdit.value = profileName.textContent;
+  inputStatusEdit.value = profileStatus.textContent;
 });
 
 addButton.addEventListener('click', function () {
   openPopup(popupAdd);
+  popupAddButton.classList.add('popup__input-submit_inactive');
+  popupAddButton.setAttribute('disabled', 'disabled');
+  formElementAdd.reset();
+});
+
+profileAvatarEditer.addEventListener('click', function () {
+  openPopup(popupProfile);
+  popupProfileButton.classList.add('popup__input-submit_inactive');
+  popupProfileButton.setAttribute('disabled', 'disabled');
+  formElementProfile.reset();
 });
 
 
-// кнопки close: закрытие модальных окон и очищение форм//
+// кнопки close: закрытие модальных окон и (!очищение форм)//
 closeButtons.forEach(function (button) {
   const popupToClose = button.closest('.popup');
   button.addEventListener('click', () => closePopup(popupToClose));
 });
 
-popupForms.forEach(function (form) {
+/* popupForms.forEach(function (form) {
   const popup = form.closest('.popup');
   const button = popup.querySelector('.popup__close');
   button.addEventListener('click', () => form.reset());
-});
+}); */
 
 
 // вызов альтернативного закрытия попапов через клик по оверлею и esc//
 closePopupWithOverlayClick();
-closePopupWithEscPress();
+// closePopupWithEscPress(); //
 
 
-// вызов функции "отправка формы - редактирование элементов страницы" //
+// отправка формы - редактирование элементов страницы //
+function handleFormEditSubmit(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = inputNameEdit.value;
+  profileStatus.textContent = inputStatusEdit.value;
+
+  renderSaveLoading(true, popupEditButton);
+  
+  patchUserInfo(inputNameEdit, inputStatusEdit);
+
+  closePopup(popupEdit);
+}
+
 formElementEdit.addEventListener('submit', handleFormEditSubmit);
 
+// отправка формы - добавление нового элемента //
+function handleFormAddSubmit(evt) {
+  evt.preventDefault();
 
-// вызов функции "отправка формы - добавление нового элемента" //
+  /* cardsElement.prepend(createCard(inputLinkAdd.value, inputNameAdd.value, 0, 'e9ab41b50f47962fecf8f076')); */
+
+  renderCreateLoading(true, popupAddButton);
+
+  postCard(inputNameAdd, inputLinkAdd);
+
+  closePopup(popupAdd);
+
+}
+
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
 
 
-// Лайк и снятие лайка, удаление карточки, увеличение карточки (попап) //
+// отправка формы - смена аватара //
+function handleFormProfileSubmit(evt) {
+  evt.preventDefault();
+
+  profileAvatar.setAttribute('src', inputLinkProfile.value);
+  
+  renderSaveLoading(true, popupProfileButton);
+  
+  patchAvatar(inputLinkProfile.value);
+
+  closePopup(popupProfile);
+}
+
+formElementProfile.addEventListener('submit', handleFormProfileSubmit);
+
+
+
+/* Лайк и снятие лайка, удаление карточки, увеличение карточки (попап) - старое
 cardsElements.addEventListener('click', function (evt) {
   const evtTarget = evt.target;
 
@@ -77,7 +135,7 @@ cardsElements.addEventListener('click', function (evt) {
     const elementText = elementItem.querySelector('.element__title');
     popupText.textContent = elementText.textContent;
   }
-});
+}); */
 
 // вызов функции добавления setTextInputsEventListeners всем формам //
 enableValidation({
@@ -85,5 +143,5 @@ enableValidation({
   inputSelector: '.popup__input-text',
   submitButtonSelector: '.popup__input-submit',
   inactiveButtonClass: 'popup__input-submit_inactive',
-  // у меня элемент ошибки работает с постоянным классом // inputErrorClass: 'popup__input-text_error', //
+  inputErrorClass: 'popup__input-text_error', 
 });

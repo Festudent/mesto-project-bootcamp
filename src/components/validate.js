@@ -1,27 +1,27 @@
 /* Валидация форм */
 
 // функция показа ошибки //
-export function showInputError(inputEl, inputErrEl) {
-  inputEl.classList.add('popup__input-text_error');
+export function showInputError(inputEl, inputErrEl, inputErrorClass) {
+  inputEl.classList.add(inputErrorClass);
   inputErrEl.textContent = inputEl.validationMessage;
   // все работает с одним постоянным классом только на textContent // inputErrEl.classList.add('popup__input-error_active'); //
 }
 
 
 // функция скрытия ошибки //
-export function hideInputError(inputEl, inputErrEl) {
-  inputEl.classList.remove('popup__input-text_error');
+export function hideInputError(inputEl, inputErrEl, inputErrorClass) {
+  inputEl.classList.remove(inputErrorClass);
   inputErrEl.textContent = '';
   // все работает с одним постоянным классом только на textContent // inputErrEl.classList.remove('popup__input-error_active'); //
 }
 
 
 // функция проверки валидности //
-export function isValid(inputEl, inputErrEl) {
+export function isValid(inputEl, inputErrEl, inputErrorClass) {
   if (!inputEl.validity.valid) {
-    showInputError(inputEl, inputErrEl);
+    showInputError(inputEl, inputErrEl, inputErrorClass);
   } else {
-    hideInputError(inputEl, inputErrEl);
+    hideInputError(inputEl, inputErrEl, inputErrorClass);
   }
 }
 
@@ -38,8 +38,10 @@ export function hasInvalidInput(inputArray) {
 export function toggleButton(inputArray, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputArray)) {
     buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.setAttribute('disabled', 'disabled');
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.classList.remove(inactiveButtonClass);    
+    buttonElement.removeAttribute('disabled');
   }
 }
 
@@ -53,7 +55,7 @@ export function toggleButton(inputArray, buttonElement, inactiveButtonClass) {
 
 
 // функция добавления слушателя с функцией проверки валидности всем текстовым инпутам формы //
-export function setTextInputsEventListeners(form, inputSelector, submitButtonSelector, inactiveButtonClass) {
+export function setTextInputsEventListeners(form, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass) {
   const formTextInputs = form.querySelectorAll(inputSelector);
   const formTextInputsArray = Array.from(formTextInputs);
   const button = form.querySelector(submitButtonSelector);
@@ -61,7 +63,7 @@ export function setTextInputsEventListeners(form, inputSelector, submitButtonSel
   formTextInputsArray.forEach(function (inputEl) {
     const inputErrEl = document.querySelector(`.${inputEl.id}-error`);
     inputEl.addEventListener('input', function () {
-      isValid(inputEl, inputErrEl);
+      isValid(inputEl, inputErrEl, inputErrorClass);
       toggleButton(formTextInputsArray, button, inactiveButtonClass);
     });
   });
@@ -83,11 +85,11 @@ export function setTextInputsEventListeners(form, inputSelector, submitButtonSel
 
 
 // функция добавления setTextInputsEventListeners всем формам //
-export function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass }) {
+export function enableValidation({ formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass }) {
   const allFormsV = document.querySelectorAll(formSelector);
   const allFormsArray = Array.from(allFormsV);
   allFormsArray.forEach(function (form) {
-    setTextInputsEventListeners(form, inputSelector, submitButtonSelector, inactiveButtonClass);
+    setTextInputsEventListeners(form, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass);
   });
 };
 

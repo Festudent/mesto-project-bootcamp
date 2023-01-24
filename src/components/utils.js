@@ -22,17 +22,33 @@ export const popupText = document.querySelector('.popup__text');
 export const inputErrors = document.querySelectorAll('.popup__input-error');
 export const allForms = document.querySelectorAll('.popup__form');
 export const allPopups = document.querySelectorAll('.popup');
+export const popupAddButton = popupAdd.querySelector('.popup__input-submit');
 
-
-// функции закрытия и открытия попапа //
-export function openPopup(popup) {
-  popup.classList.add('popup_opened');
-};
-
-export function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-};
-
+export const profileAvatar = document.querySelector('.profile__avatar');
+export const profileAvatarEditer = document.querySelector('.profile__avatar-editer');
+export const popupProfile = document.querySelector('.popup-profile');
+export const popupProfileButton = popupProfile.querySelector('.popup__input-submit');
+export const inputLinkProfile = document.querySelector('.popup-profile__input-text');
+export const formElementProfile = popupProfile.querySelector('.popup-profile__form');
+export const popupEditButton = popupEdit.querySelector('.popup__input-submit');
 
 // для "альтернативное закрытие попапов через клик по оверлею и esc"//
 export const allPopupsArray = Array.from(allPopups);
+
+
+//  функции для загрузки //
+export function renderSaveLoading(isLoading, button) {
+  if (isLoading) {
+    button.setAttribute('value', 'Сохранение...');
+  } else {
+    button.setAttribute('value', 'Сохранить');
+  }
+}
+
+export function renderCreateLoading(isLoading, button) {
+  if (isLoading) {
+    button.setAttribute('value', 'Создание...');
+  } else {
+    button.setAttribute('value', 'Создать');
+  }
+}

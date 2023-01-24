@@ -1,0 +1,21 @@
+.profile__avatar-editer {
+  margin: 0 30px 0 0;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(../../../images/pencil_vector.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-size: 26px;
+}
+
+
+@media screen and (max-width: 930px) {
+  .profile__avatar-editer {
+    margin-right: 0;
+    margin-bottom: 26px;
+  }
+}

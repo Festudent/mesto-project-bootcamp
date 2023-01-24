@@ -24,13 +24,15 @@
 "Исправьте расхождения http://joxi.ru/l2ZXENLuzb3g8r" */
 
 .popup__input-text:first-child {
-  /* старое margin: 48px auto 30px; */
-  margin: 48px auto 5px;
+  /* старое margin: 48px auto 30px; 
+  margin: 48px auto 5px; изменил верхний margin, чтобы попап не увеличивался, так как ошибка бывает на две строчки */
+  margin: 30px auto 5px;
 }
 
 @media screen and (max-width: 930px) {
   .popup__input-text:first-child {
-    margin-top: 75px;
+    /* margin-top: 75px; изменил верхний margin, чтобы попап не увеличивался, так как ошибка бывает на две строчки !57 */
+    margin-top: 40px;
   }
 }
 
