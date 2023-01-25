@@ -31,18 +31,18 @@ export const initialCards = [
   }
 ];
 
-function handleCardDelete(id, card) {
+function handleCardDelete(id, userId, card) {
   const cardDelete = card.querySelector('.element__delete');
-  if (id === 'e9ab41b50f47962fecf8f076') {
+  if (id === userId) {
     cardDelete.classList.add('element__delete_active');
   } else {
     cardDelete.classList.remove('element__delete_active');
   }
-} 
+}
 
 
 // функция создания карточки //
-export function createCard(sourceLink, sourceTitle, sourceLikes, sourceId, sourceCardId) {
+export function createCard(sourceLink, sourceTitle, sourceLikes, sourceId, sourceCardId, userId) {
   const cardElement = template.content.cloneNode(true);
 
   const cardImage = cardElement.querySelector('.element__image');
@@ -55,25 +55,40 @@ export function createCard(sourceLink, sourceTitle, sourceLikes, sourceId, sourc
   cardImage.setAttribute('alt', sourceTitle);
   cardTitle.textContent = sourceTitle;
   cardLikeCounter.textContent = sourceLikes;
-  handleCardDelete(sourceId, cardElement);
+  handleCardDelete(sourceId, userId, cardElement);
   cardElement.id = sourceCardId;
 
   cardLike.addEventListener('click', function (evt) {
     const evtTarget = evt.target;
     if (!evtTarget.classList.contains('element__like_active')) {
-      evtTarget.classList.add('element__like_active');
-      likeRequest(sourceCardId, cardLikeCounter);
+      likeRequest(sourceCardId, cardLikeCounter)
+        .then((obj) => {
+          cardLikeCounter.textContent = obj.likes.length;
+        })
+        .then(() => evtTarget.classList.add('element__like_active'))
+        .catch((err) => {
+          console.log(err);
+        })
     } else {
-      evtTarget.classList.remove('element__like_active');
-      likeDeleteRequest(sourceCardId, cardLikeCounter);
+      likeDeleteRequest(sourceCardId, cardLikeCounter)
+        .then((obj) => {
+          cardLikeCounter.textContent = obj.likes.length;
+        })
+        .then(() => evtTarget.classList.remove('element__like_active'))
+        .catch((err) => {
+          console.log(err);
+        })
     }
   });
 
   cardDelete.addEventListener('click', function (evt) {
     const evtTarget = evt.target;
     const deletingItem = evtTarget.closest('.element');
-    deleteCardRequest(sourceCardId);
-    deletingItem.remove();
+    deleteCardRequest(sourceCardId)
+      .then(() => deletingItem.remove())
+      .catch((err) => {
+        console.log(err);
+      })
   });
 
   cardImage.addEventListener('click', function (evt) {

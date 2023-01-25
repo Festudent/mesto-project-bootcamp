@@ -5,9 +5,23 @@ import { initialCards, createCard } from './card.js';
 import { closePopupWithOverlayClick, openPopup, closePopup } from './modal.js';
 import { cardsElement, editButton, popupEdit, addButton, popupAdd, inputNameEdit, profileName, inputStatusEdit, profileStatus, closeButtons, popupForms, formElementEdit, formElementAdd, cardsElements, popupWithImage, popupImage, popupText, inputNameAdd, inputLinkAdd, popupAddButton, profileAvatarEditer, popupProfile, popupProfileButton, profileAvatar, inputLinkProfile, formElementProfile, renderCreateLoading, renderSaveLoading, popupEditButton } from './utils.js';
 
-getUserInfo();
+/* getUserInfo();
+getCards(); */
 
-getCards();
+Promise.all([getUserInfo(), getCards()])
+  .then(([info, cards]) => {
+    profileName.textContent = info.name;
+    profileStatus.textContent = info.about;
+    profileAvatar.setAttribute('src', info.avatar);
+
+    cards.forEach(function (item) {
+      cardsElement.append(createCard(item.link, item.name, item.likes.length, item.owner._id, item._id, info._id));
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+
 
 /* добавление изначальных карточек на страницу //
 initialCards.forEach(function (item) {
@@ -48,19 +62,6 @@ profileAvatarEditer.addEventListener('click', function () {
 });
 
 
-// кнопки close: закрытие модальных окон и (!очищение форм)//
-closeButtons.forEach(function (button) {
-  const popupToClose = button.closest('.popup');
-  button.addEventListener('click', () => closePopup(popupToClose));
-});
-
-/* popupForms.forEach(function (form) {
-  const popup = form.closest('.popup');
-  const button = popup.querySelector('.popup__close');
-  button.addEventListener('click', () => form.reset());
-}); */
-
-
 // вызов альтернативного закрытия попапов через клик по оверлею и esc//
 closePopupWithOverlayClick();
 // closePopupWithEscPress(); //
@@ -70,14 +71,19 @@ closePopupWithOverlayClick();
 function handleFormEditSubmit(evt) {
   evt.preventDefault();
 
-  profileName.textContent = inputNameEdit.value;
-  profileStatus.textContent = inputStatusEdit.value;
+  const inputNameEditValue = inputNameEdit.value;
+  const inputStatusEditValue = inputStatusEdit.value;
+
+  profileName.textContent = inputNameEditValue;
+  profileStatus.textContent = inputStatusEditValue;
 
   renderSaveLoading(true, popupEditButton);
-  
-  patchUserInfo(inputNameEdit, inputStatusEdit);
 
-  closePopup(popupEdit);
+  patchUserInfo(inputNameEditValue, inputStatusEditValue)
+    .then(() => closePopup(popupEdit))
+    .catch((err) => {
+      console.log(err);
+    })
 }
 
 formElementEdit.addEventListener('submit', handleFormEditSubmit);
@@ -88,12 +94,20 @@ function handleFormAddSubmit(evt) {
 
   /* cardsElement.prepend(createCard(inputLinkAdd.value, inputNameAdd.value, 0, 'e9ab41b50f47962fecf8f076')); */
 
+  const inputNameAddValue = inputNameAdd.value;
+  const inputLinkAddValue = inputLinkAdd.value;
+
   renderCreateLoading(true, popupAddButton);
 
-  postCard(inputNameAdd, inputLinkAdd);
-
-  closePopup(popupAdd);
-
+  postCard(inputNameAddValue, inputLinkAddValue)
+    .then((obj) => {
+      console.log(obj);
+      cardsElement.prepend(createCard(inputLinkAddValue, inputNameAddValue, obj.likes.length, obj.owner._id, obj._id));
+    })
+    .then(() => closePopup(popupAdd))
+    .catch((err) => {
+      console.log(err);
+    })
 }
 
 formElementAdd.addEventListener('submit', handleFormAddSubmit);
@@ -103,13 +117,17 @@ formElementAdd.addEventListener('submit', handleFormAddSubmit);
 function handleFormProfileSubmit(evt) {
   evt.preventDefault();
 
-  profileAvatar.setAttribute('src', inputLinkProfile.value);
-  
-  renderSaveLoading(true, popupProfileButton);
-  
-  patchAvatar(inputLinkProfile.value);
+  const avatarLink = inputLinkProfile.value;
 
-  closePopup(popupProfile);
+  profileAvatar.setAttribute('src', avatarLink);
+
+  renderSaveLoading(true, popupProfileButton);
+
+  patchAvatar(avatarLink)
+    .then(() => closePopup(popupProfile))
+    .catch((err) => {
+      console.log(err);
+    })
 }
 
 formElementProfile.addEventListener('submit', handleFormProfileSubmit);
@@ -143,5 +161,5 @@ enableValidation({
   inputSelector: '.popup__input-text',
   submitButtonSelector: '.popup__input-submit',
   inactiveButtonClass: 'popup__input-submit_inactive',
-  inputErrorClass: 'popup__input-text_error', 
+  inputErrorClass: 'popup__input-text_error',
 });

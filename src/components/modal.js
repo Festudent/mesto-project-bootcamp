@@ -1,13 +1,13 @@
 import { createCard } from './card.js';
-import { cardsElement, popupEdit, popupAdd, inputNameEdit, inputNameAdd, profileName, inputStatusEdit, inputLinkAdd, profileStatus, allPopupsArray } from './utils.js';
+import { closeButtons, cardsElement, popupEdit, popupAdd, inputNameEdit, inputNameAdd, profileName, inputStatusEdit, inputLinkAdd, profileStatus, allPopupsArray } from './utils.js';
 
 export function closeByEsc(evt) {
   const evtKey = evt.key;
   if (evtKey === "Escape") {
     const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup); 
+    closePopup(openedPopup);
   }
-}  
+}
 
 // функции закрытия и открытия попапа //
 export function openPopup(popup) {
@@ -19,6 +19,20 @@ export function closePopup(popup) {
   document.addEventListener('keydown', closeByEsc);
   popup.classList.remove('popup_opened');
 };
+
+
+// кнопки close: закрытие модальных окон и (!очищение форм)//
+closeButtons.forEach(function (button) {
+  const popupToClose = button.closest('.popup');
+  button.addEventListener('click', () => closePopup(popupToClose));
+});
+
+/* popupForms.forEach(function (form) {
+  const popup = form.closest('.popup');
+  const button = popup.querySelector('.popup__close');
+  button.addEventListener('click', () => form.reset());
+}); */
+
 
 // альтернативное закрытие попапов через клик по оверлею и esc//
 export function closePopupWithOverlayClick() {

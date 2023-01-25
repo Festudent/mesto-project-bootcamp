@@ -10,7 +10,100 @@ const config = {
   }
 }
 
+
+function getResponseData(res) {
+  if (!res.ok) {
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  return res.json();
+}
+
+
 export const getUserInfo = () => {
+  return fetch(`${config.baseUrl}/users/me`, { headers: config.headers })
+    .then(res => getResponseData(res))
+}
+
+
+export const getCards = () => {
+  return fetch(`${config.baseUrl}/cards`, { headers: config.headers })
+    .then(res => getResponseData(res))
+}
+
+
+export const patchUserInfo = (inputNameEditValue, inputStatusEditValue) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: inputNameEditValue,
+      about: inputStatusEditValue
+    })
+  })
+    .then(res => getResponseData(res))
+    .finally(() => {
+      renderSaveLoading(false, popupEditButton);
+    })
+}
+
+
+export const postCard = (inputNameAddValue, inputLinkAddValue) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: inputNameAddValue,
+      link: inputLinkAddValue
+    })
+  })
+    .then(res => getResponseData(res))
+    .finally(() => {
+      renderCreateLoading(false, popupAddButton);
+    })
+}
+
+
+export const deleteCardRequest = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+    .then(res => getResponseData(res))
+}
+
+
+export const likeRequest = (cardId, cardLikeCounter) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: 'PUT',
+    headers: config.headers,
+  })
+    .then(res => getResponseData(res))
+}
+
+export const likeDeleteRequest = (cardId, cardLikeCounter) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+    .then(res => getResponseData(res))
+}
+
+export const patchAvatar = (avatarLink) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatarLink,
+    })
+  })
+    .then(res => getResponseData(res))
+    .finally(() => {
+      renderSaveLoading(false, popupProfileButton);
+    })
+}
+
+
+/* export const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, { headers: config.headers })
     .then((res) => {
       if (res.ok) {
@@ -27,10 +120,10 @@ export const getUserInfo = () => {
     .catch((err) => {
       console.log(err);
     })
-}
+} */
 
 
-export const getCards = () => {
+/* export const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, { headers: config.headers })
     .then((res) => {
       if (res.ok) {
@@ -47,10 +140,9 @@ export const getCards = () => {
     .catch((err) => {
       console.log(err);
     })
-}
+} */
 
-
-export const patchUserInfo = (inputNameEdit, inputStatusEdit) => {
+/* export const patchUserInfo = (inputNameEdit, inputStatusEdit) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
@@ -193,4 +285,4 @@ export const patchAvatar = (avatarLink) => {
       console.log(err);
       renderSaveLoading(false, popupProfileButton);
     })
-}
+} */
